@@ -41,7 +41,13 @@ export default class App extends Component {
           <section>
           <p>Filter by keyword:</p>
           <select onChange={ this.handleChangedKeyword }>
-              <option value="" defaultValue>View All</option>
+
+              {images
+                .map(image => {
+                  return <option value={image.keyword}>{image.keyword}</option>
+                })}
+
+              {/* <option value="" defaultValue>View All</option>
               <option value="narwhal">narwhal</option>
               <option value="rhino">rhino</option>
               <option value="unicorn">unicorn</option>
@@ -52,7 +58,7 @@ export default class App extends Component {
               <option value="addax">addax</option>
               <option value="chameleon">chameleon</option>
               <option value="lizard">lizard</option>
-              <option value="dragon">dragon</option>
+              <option value="dragon">dragon</option> */}
           </select>
           {/* <p>Filter by horns:</p>
           <select onChange={ this.handleChangedHorns }>
