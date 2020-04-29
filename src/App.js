@@ -8,13 +8,30 @@ import ImageItem from './ImageItem.js';
 
 export default class App extends Component {
   // init state as null -- nothing selected
-  state = { selected: null }
+  state = { 
+    // hasBeenChanged: false,
+    selectedKeyword: null,
+    // selectedHorns: null
+  }
 
   // create function to update state based on change to `select`
-  handleChange = (e) => {
-    this.setState({ selected: e.target.value });
-    console.log(e.target.value);
+
+  handleChangedKeyword = (e) => {
+    this.setState({ 
+      // hasBeenChanged: true,
+      selectedKeyword: e.target.value,
+      // selectedHorns: null 
+    });
   }
+
+  // handleChangedHorns = (e) => {
+  //   const parsedValue = parseInt(e.target.value);
+  //   this.setState({ 
+  //     hasBeenChanged: true,
+  //     selectedKeyword: null, 
+  //     selectedHorns: parsedValue 
+  //   });
+  // }
 
   render() {
     return (
@@ -23,7 +40,7 @@ export default class App extends Component {
         <main>
           <section>
           <p>Filter by keyword:</p>
-          <select onChange={ this.handleChange }>
+          <select onChange={ this.handleChangedKeyword }>
               <option value="" defaultValue>View All</option>
               <option value="narwhal">narwhal</option>
               <option value="rhino">rhino</option>
@@ -37,14 +54,35 @@ export default class App extends Component {
               <option value="lizard">lizard</option>
               <option value="dragon">dragon</option>
           </select>
+          {/* <p>Filter by horns:</p>
+          <select onChange={ this.handleChangedHorns }>
+              <option value="" defaultValue>View All</option>
+              <option value="1">1 horn</option>
+              <option value="2">2 horns</option>
+              <option value="3">3 horns</option>
+              <option value="100">100 horns</option>
+          </select> */}
           <ul>
             {images
               .filter(image => {
-                // if `state.selected` has value of null, return true for all items
-                if (!this.state.selected) return true;
+                
+                let filteredBy = image.keyword;
+                let filteringState = this.state.selectedKeyword;
+                let result = (filteredBy === filteringState);
 
-                // if `state.selected` has value of a keyword, return true only for items with that keyword
-                return image.keyword === this.state.selected;
+                if (!this.state.selectedKeyword) { result = true }
+                // if no change has been made, return all items
+                // if (!this.state.hasBeenChanged) {
+                //   result = true;
+                // }
+                // else {
+                //   if (this.state.selectedHorns) {
+                //     filteredBy = image.horns;
+                //     filteringState = this.state.selectedHorns;
+                //   }
+                // }
+
+                return result;
               })
               .map(filteredImage => {
                 // return ImageItem element for each item that passed the filter
