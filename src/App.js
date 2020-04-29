@@ -22,22 +22,32 @@ export default class App extends Component {
         <Header></Header>
         <main>
           <section>
-          <p>Filter by number of horns:</p>
+          <p>Filter by keyword:</p>
           <select onChange={ this.handleChange }>
               <option value="" defaultValue>View All</option>
-              <option value="1">1 Horn</option>
-              <option value="2">2 Horns</option>
-              <option value="3">3 Horns</option>
-              <option value="100">100 Horns</option>
+              <option value="narwhal">narwhal</option>
+              <option value="rhino">rhino</option>
+              <option value="unicorn">unicorn</option>
+              <option value="unilego">unilego</option>
+              <option value="triceratops">triceratops</option>
+              <option value="markhor">markhor</option>
+              <option value="mouflon">mouflon</option>
+              <option value="addax">addax</option>
+              <option value="chameleon">chameleon</option>
+              <option value="lizard">lizard</option>
+              <option value="dragon">dragon</option>
           </select>
           <ul>
             {images
               .filter(image => {
+                // if `state.selected` has value of null, return true for all items
                 if (!this.state.selected) return true;
 
-                return image.horns === parseInt(this.state.selected);
+                // if `state.selected` has value of a keyword, return true only for items with that keyword
+                return image.keyword === this.state.selected;
               })
               .map(filteredImage => {
+                // return ImageItem element for each item that passed the filter
                 return <ImageItem imageObject={filteredImage}></ImageItem>
               })
             }
